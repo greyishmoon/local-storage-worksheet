@@ -67,7 +67,6 @@ function setText() {
         $('#chocobars').html(output);
     
     // Retrieve JSON object from local storage, deserialise and print:
-    
     var localChocBar = window.localStorage.getItem("Bars");
     var deserialisedBars = JSON.parse(localChocBar);
     
@@ -128,7 +127,9 @@ function createDB() {
         tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
         tx.executeSql('INSERT INTO LOGS (id, log) VALUES (1, "foobar")');
         tx.executeSql('INSERT INTO LOGS (id, log) VALUES (2, "logmsg")');
-        msg = '<p>Log message created and row inserted.</p>';
+        tx.executeSql('INSERT INTO LOGS (id, log) VALUES (3, "baz")');
+        tx.executeSql('INSERT INTO LOGS (id, log) VALUES (4, "qux")');
+        msg = '<p>LOG table created and 4 rows inserted.</p>';
         document.querySelector('#dbstatus').innerHTML =  msg; 
     }); 
 }
@@ -146,7 +147,8 @@ function queryDB() {
                 document.querySelector('#dbresponse').innerHTML =  qrymsg;
 
                 for (i = 0; i < len; i++){
-                    qrymsg = "<p><b>" + results.rows.item(i).log + "</b></p>";
+                    qrymsg = "<p><b>" + results.rows.item(i).id + "   " 
+                        + results.rows.item(i).log + "</b></p>";
                     document.querySelector('#dbresponse').innerHTML +=  qrymsg;
                 }
         }, null);   
